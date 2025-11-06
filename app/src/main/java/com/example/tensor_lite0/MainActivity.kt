@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
 
         return ObjectDetector.createFromFileAndOptions(
             this,
-            "efficientdet-lite0.tflite",
+            "1.tflite",
             options
         )
     }
@@ -126,8 +126,8 @@ class MainActivity : AppCompatActivity() {
         val uri = resolver.insert(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
 
         uri?.let {
-            resolver.openOutputStream(it).use { output ->
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output)
+            resolver.openOutputStream(it)?.use { outputStream ->
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
             }
             android.widget.Toast.makeText(this, "The image is saved in gallery!! ✅", android.widget.Toast.LENGTH_SHORT).show()
         } ?: run {

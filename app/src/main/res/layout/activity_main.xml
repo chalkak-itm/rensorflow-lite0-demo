@@ -27,6 +27,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        android:text="Resulting would be appeared here"
+        android:text="Resulting words would be appeared here"
         android:textSize="16sp" />
 </LinearLayout>
