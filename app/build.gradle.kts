@@ -46,4 +46,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    // TensorFlow Lite Task Library (Vision)
+    implementation("org.tensorflow:tensorflow-lite-task-vision:0.4.0")
 }
