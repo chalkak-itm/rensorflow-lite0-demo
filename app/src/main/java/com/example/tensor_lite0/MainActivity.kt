@@ -109,7 +109,29 @@ class MainActivity : AppCompatActivity() {
 
         imageView.setImageBitmap(mutableBitmap)
 
-        textView.text = if (labels.isEmpty()) "탐지된 객체 없음"
+        textView.text = if (labels.isEmpty()) "There are no detected object"
         else labels.joinToString(", ")
+        saveBitmapToGallery(mutableBitmap, "result_${System.currentTimeMillis()}")
+
+    }
+    //Saving the result image in local device
+    private fun saveBitmapToGallery(bitmap: Bitmap, filename: String) {
+        val contentValues = android.content.ContentValues().apply {
+            put(android.provider.MediaStore.Images.Media.DISPLAY_NAME, "$filename.jpg")
+            put(android.provider.MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+            put(android.provider.MediaStore.Images.Media.RELATIVE_PATH, "DCIM/TensorLiteResults")
+        }
+
+        val resolver = contentResolver
+        val uri = resolver.insert(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+
+        uri?.let {
+            resolver.openOutputStream(it).use { output ->
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output)
+            }
+            android.widget.Toast.makeText(this, "The image is saved in gallery!! ✅", android.widget.Toast.LENGTH_SHORT).show()
+        } ?: run {
+            android.widget.Toast.makeText(this, "Failure in saving ❌", android.widget.Toast.LENGTH_SHORT).show()
+        }
     }
 }
